@@ -1,50 +1,70 @@
 # Crypto API Data Pipeline
 
-This project demonstrates a simple **Data Engineering pipeline** that extracts cryptocurrency price data from the CoinGecko API, transforms the data using Python, and loads it into a DuckDB database for analysis.
+A simple **Data Engineering project** that builds an automated ETL pipeline to collect cryptocurrency price data from the CoinGecko API and store it in a DuckDB database for analysis.
 
-The pipeline stores **historical cryptocurrency prices**, enabling time-series analysis and price trend exploration.
-
----
-
-## Pipeline Architecture
-
-CoinGecko API  
-↓  
-Extract (Python - requests)  
-↓  
-Transform (Pandas)  
-↓  
-Load (DuckDB)  
-↓  
-Historical Data Storage  
-↓  
-SQL Analysis  
+The pipeline demonstrates core data engineering concepts such as **API ingestion, data transformation, database loading, and scheduled data collection**.
 
 ---
 
-## Tech Stack
+# Project Overview
+
+This project simulates a real-world **data ingestion pipeline** where data is collected from an external API, processed, and stored for analytics.
+
+Each time the pipeline runs, it fetches the latest cryptocurrency prices and appends them to the database, creating a **historical dataset for time-series analysis**.
+
+---
+
+# Pipeline Architecture
+
+```
+CoinGecko API
+      │
+      ▼
+Extract (Python - requests)
+      │
+      ▼
+Transform (Pandas)
+      │
+      ▼
+Load (DuckDB)
+      │
+      ▼
+Historical Price Storage
+      │
+      ▼
+SQL Analytics
+```
+
+---
+
+# Tech Stack
+
+**Languages & Tools**
 
 - Python
 - Pandas
 - DuckDB
 - SQL
-- CoinGecko API
+
+**Data Source**
+
+- CoinGecko Public API
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 crypto-api-data-pipeline
 │
-├── extract.py
-├── transform.py
-├── load.py
-├── pipeline.py
-├── scheduler.py
+├── extract.py        # Extract data from API
+├── transform.py      # Transform JSON to structured dataframe
+├── load.py           # Load data into DuckDB
+├── pipeline.py       # Orchestrates the ETL pipeline
+├── scheduler.py      # Runs pipeline automatically on a schedule
 │
-├── query_data.py
-├── analysis.sql
+├── query_data.py     # Example script to query database
+├── analysis.sql      # SQL analysis queries
 │
 ├── requirements.txt
 └── README.md
@@ -52,11 +72,11 @@ crypto-api-data-pipeline
 
 ---
 
-## Data Pipeline Steps
+# ETL Pipeline Steps
 
-### 1. Extract
+### 1️⃣ Extract
 
-The pipeline retrieves cryptocurrency prices from the **CoinGecko API** using Python.
+The pipeline retrieves cryptocurrency prices from the **CoinGecko API**.
 
 Example API response:
 
@@ -70,9 +90,9 @@ Example API response:
 
 ---
 
-### 2. Transform
+### 2️⃣ Transform
 
-The JSON response is transformed into a structured dataframe.
+The raw JSON response is transformed into a structured dataframe.
 
 Schema:
 
@@ -82,15 +102,13 @@ Schema:
 | coin | cryptocurrency name |
 | price_usd | price in USD |
 
-This step converts the raw API response into an analytics-friendly dataset.
-
 ---
 
-### 3. Load
+### 3️⃣ Load
 
-The transformed data is stored in a **DuckDB database**.
+The processed data is stored in a **DuckDB database**.
 
-Table:
+Table name:
 
 ```
 crypto_prices
@@ -104,13 +122,43 @@ coin TEXT
 price_usd DOUBLE
 ```
 
-Each pipeline execution **appends new rows**, creating a historical dataset.
+Each pipeline execution **appends new records**, creating a historical dataset.
 
 ---
 
-## Example SQL Analysis
+# Running the Pipeline
 
-### View latest price data
+Run the ETL pipeline manually:
+
+```
+python pipeline.py
+```
+
+This will:
+
+1. Fetch latest cryptocurrency prices
+2. Transform the data
+3. Store it in DuckDB
+
+---
+
+# Automated Pipeline Scheduling
+
+The project also includes a scheduler to automatically run the pipeline.
+
+Run:
+
+```
+python scheduler.py
+```
+
+This simulates a **scheduled data pipeline** similar to workflows managed by tools like **Apache Airflow or Prefect**.
+
+---
+
+# Example SQL Analysis
+
+### View latest data
 
 ```sql
 SELECT *
@@ -142,50 +190,30 @@ GROUP BY coin;
 
 ---
 
-## Running the Pipeline
-
-Run the ETL pipeline:
-
-```
-python pipeline.py
-```
-
-Each execution fetches new cryptocurrency prices and stores them in the database.
-
----
-
-## Automated Pipeline Scheduling
-
-The pipeline can be scheduled to run periodically using the scheduler script.
-
-Run:
-
-```
-python scheduler.py
-```
-
-This will execute the pipeline automatically at defined intervals.
-
----
-
-## Key Learning Outcomes
-
-This project demonstrates several core **Data Engineering concepts**:
+# Key Data Engineering Concepts Demonstrated
 
 - API data ingestion
 - ETL pipeline design
 - modular Python pipeline architecture
-- database loading
+- automated data pipelines
 - time-series data storage
-- SQL-based analytics
+- SQL-based analysis
 
 ---
 
-## Possible Improvements
+# Future Improvements
 
-Future improvements could include:
+Potential improvements for this project:
 
-- pipeline orchestration using Airflow or Prefect
-- data warehouse modeling
-- monitoring and logging
-- visualization dashboard
+- pipeline orchestration with **Apache Airflow**
+- logging and monitoring
+- data warehouse modeling (star schema)
+- dashboard visualization
+- containerization with Docker
+
+---
+
+# Author
+
+Anton Tanianto  
+Aspiring Data Engineer
